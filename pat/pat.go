@@ -1,21 +1,28 @@
 package pat
 
 import (
-	"fmt"
-	"strings"
+    "strings"
 )
 
-func GeneratePatterns(nn, kk uint) (slice []string) {
-	format := fmt.Sprintf("%%0%db", nn)
-	for ii := (1 << nn) - 1; ii >= 0; ii-- {
-		str := fmt.Sprintf(format, ii)
-		if ValidPattern(str, kk) {
-			slice = append(slice, str)
-		}
-	}
-	return
+func GeneratePatterns(nn, kk int) []string {
+    aa := make([]string, nn)
+    var bb []string
+    Gen(nn, kk, aa, &bb)
+    return bb
 }
 
-func ValidPattern(str string, kk uint) bool {
-	return strings.Count(str, "1") == int(kk)
+func Gen(nn, kk int, aa []string, bb *[]string) {
+    if nn == 0 && kk == 0 {
+        *bb = append(*bb, strings.Join(aa, ""))
+    } else {
+        if kk > 0 {
+            aa[len(aa) - nn] = "1"
+            Gen(nn-1, kk - 1, aa, bb)
+        }
+        if nn > kk {
+            aa[len(aa) - nn] = "0"
+            Gen(nn-1, kk , aa, bb)
+        }
+    }
 }
+

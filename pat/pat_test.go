@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func tGen(nn, kk uint, out []string, t *testing.T) {
+func tGen(nn, kk int, out []string, t *testing.T) {
 	f := GeneratePatterns
 	ans := f(nn, kk)
 	fmt.Println(len(ans))
